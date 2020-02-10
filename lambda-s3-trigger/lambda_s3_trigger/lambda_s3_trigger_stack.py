@@ -2,6 +2,7 @@ from aws_cdk import (
     aws_lambda as _lambda,
     aws_s3 as s3,
     aws_s3_notifications,
+    aws_sqs as sqs,
     core
 )
 
@@ -19,4 +20,7 @@ class LambdaS3TriggerStack(core.Stack):
 
         s3Bucket.add_event_notification(s3.EventType.OBJECT_CREATED,notification)
 
+        queue = sqs.Queue(self,"test_queue")
+
+        queue.grant_send_messages(function)
         # The code that defines your stack goes here
